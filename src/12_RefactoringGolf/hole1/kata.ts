@@ -53,15 +53,15 @@ export class Game {
 
   public Winner(): string {
     if (this.isRowFull(firstRow) && this.isRowFullWithSameSymbol(firstRow)) {
-      return this._board.TileAt(firstRow, firstColumn)!.Symbol;
+      return this._board.getSymbolAt(firstRow, firstColumn);
     }
 
     if (this.isRowFull(secondRow) && this.isRowFullWithSameSymbol(secondRow)) {
-      return this._board.TileAt(secondRow, firstColumn)!.Symbol;
+      return this._board.getSymbolAt(secondRow, firstColumn);
     }
 
     if (this.isRowFull(thirdRow) && this.isRowFullWithSameSymbol(thirdRow)) {
-      return this._board.TileAt(thirdRow, firstColumn)!.Symbol;
+      return this._board.getSymbolAt(thirdRow, firstColumn);
     }
 
     return emptyPlay;
@@ -69,25 +69,29 @@ export class Game {
 
   private isRowFull(row: number) {
     return (
-      this._board.TileAt(row, firstColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, secondColumn)!.Symbol != emptyPlay &&
-      this._board.TileAt(row, thirdColumn)!.Symbol != emptyPlay
+      this._board.isTileEmpty(row, firstColumn) &&
+      this._board.isTileEmpty(row, secondColumn) &&
+      this._board.isTileEmpty(row, thirdColumn)
     );
   }
 
   private isRowFullWithSameSymbol(row: number) {
     return (
-      this._board.TileAt(row, firstColumn)!.Symbol ==
-        this._board.TileAt(row, secondColumn)!.Symbol &&
-      this._board.TileAt(row, thirdColumn)!.Symbol == this._board.TileAt(row, secondColumn)!.Symbol
+      this._board.TileAt(row, firstColumn).sameSybolAs(this._board.TileAt(row, secondColumn))
+         &&
+      this._board.TileAt(row, thirdColumn).sameSybolAs(this._board.TileAt(row, secondColumn))
     );
   }
 }
 
-interface Tile {
+class Tile {
   X: number;
   Y: number;
   Symbol: string;
+
+  public sameSybolAs(other: Tile){
+    return this.Symbol == other.Symbol;
+  }
 }
 
 class Board {
@@ -108,5 +112,13 @@ class Board {
 
   public AddTileAt(symbol: string, x: number, y: number): void {
     this._plays.find((t: Tile) => t.X == x && t.Y == y)!.Symbol = symbol;
+  }
+
+  public isTileEmpty(row:number ,column:number){
+    return this.TileAt(row, column)!.Symbol != emptyPlay;
+  }
+
+  public getSymbolAt(row:number, column:number){
+    return this.TileAt(row, column)!.Symbol
   }
 }
