@@ -1,3 +1,8 @@
+# Groupe
+- Guillaume SCHLEGEL
+- Noa DESPAUX
+- Benoit LECLERC
+
 # Refactoring Golf
 
 - Start on hole 1 and refactor the code to be like the code in hole 2
