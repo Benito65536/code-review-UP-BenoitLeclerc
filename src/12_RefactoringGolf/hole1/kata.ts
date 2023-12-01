@@ -122,7 +122,7 @@ class Board {
   }
 
   public isTileEmpty(row:number ,column:number){
-    return this.TileAt(row, column)!.Symbol != emptyPlay;
+    return this.TileAt(row, column)!.Symbol == emptyPlay;
   }
 
   public getSymbolAt(row:number, column:number){
