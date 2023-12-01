@@ -85,23 +85,30 @@ export class Game {
 }
 
 class Tile {
-  X: number;
-  Y: number;
-  Symbol: string;
+  X: number = 0;
+  Y: number = 0;
+  Symbol: string = emptyPlay;
+
+  constructor(x: number, y: number, Symbol: string) {
+    this.X = x;
+    this.Y = y;
+    this.Symbol = Symbol;
+  }
 
   public sameSybolAs(other: Tile){
     return this.Symbol == other.Symbol;
   }
+
+
 }
 
 class Board {
   private _plays: Tile[] = [];
 
   constructor() {
-    for (let i = firstRow; i <= thirdRow; i++) {
-      for (let j = firstColumn; j <= thirdColumn; j++) {
-        const tile: Tile = { X: i, Y: j, Symbol: emptyPlay };
-        this._plays.push(tile);
+    for (let x = firstRow; x <= thirdRow; x++) {
+      for (let y = firstColumn; y <= thirdColumn; y++) {
+        this._plays.push(new Tile(x, y, emptyPlay));
       }
     }
   }
